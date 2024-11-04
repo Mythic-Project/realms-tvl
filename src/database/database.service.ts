@@ -14,6 +14,7 @@ export class DatabaseService {
       user: configuration().user,
       password: configuration().password,
       database: configuration().database,
+      ssl: true
     });
 
     this.pool.on('error', (err) => {
