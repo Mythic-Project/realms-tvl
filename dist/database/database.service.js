@@ -23,6 +23,7 @@ let DatabaseService = DatabaseService_1 = class DatabaseService {
             user: (0, configuration_1.default)().user,
             password: (0, configuration_1.default)().password,
             database: (0, configuration_1.default)().database,
+            ssl: true
         });
         this.pool.on('error', (err) => {
             this.logger.error('Unexpected error on idle client', err);
