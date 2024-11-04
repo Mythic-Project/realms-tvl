@@ -11,6 +11,12 @@
         "src": "/(.*)",
         "dest": "dist/main.js"
       }
-    ]
+    ],
+    "functions": {
+      "dist/*.js": {
+        "memory": 3009,
+        "maxDuration": 90
+      }
+    }
   }
   
