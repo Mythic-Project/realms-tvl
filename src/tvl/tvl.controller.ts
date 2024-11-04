@@ -29,7 +29,7 @@ export class TvlController {
   //     return { message: 'Total TVL updated successfully', totalValueUsd };
   //   } catch (error) {
   //     this.logger.error('Error updating total TVL', error);
-  //     return { error: 'Error updating TVL' };
+  //     return { error: 'Error updating TVL' }
   //   }
   // }
 
