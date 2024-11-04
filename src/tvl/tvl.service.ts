@@ -101,7 +101,18 @@ export class TvlService {
     const result = await this.dbService.query(
       `SELECT value, calculated_at FROM tvl ORDER BY calculated_at DESC LIMIT 1`,
     );
-    return result.rows.length > 0 ? parseFloat(result.rows[0].value) : null;
+
+    const result2 = await this.dbService.query(
+      `SELECT value, calculated_at FROM default_tvl ORDER BY calculated_at DESC LIMIT 1`,
+    );
+
+    return result.rows.length > 0 && result2.rows.length > 0 ? 
+      parseFloat(result.rows[0].value) + parseFloat(result2.rows[0].value) : 
+    result.rows.length > 0 ?
+      parseFloat(result.rows[0].value) :
+    result2.rows.length > 0 ?
+      parseFloat(result2.rows[0].value) :
+      null;
   }
 
   // Calculate TVL for a specific DAO by governance ID
