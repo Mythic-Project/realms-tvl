@@ -11,7 +11,10 @@ export declare class TvlService {
     private sleep;
     private withRetry;
     updateAllTvl(): Promise<number>;
-    getLatestAllTvl(): Promise<number>;
+    getLatestAllTvl(): Promise<{
+        tvl: any;
+        tokens: any;
+    }>;
     calculateTvlForDao(daoGovernanceProgramId: string): Promise<number>;
     private calculateRealmTvl;
     private addTokenDetail;

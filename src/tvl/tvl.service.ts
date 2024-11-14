@@ -98,21 +98,18 @@ export class TvlService {
 
   // Get the latest total TVL for all DAOs
   async getLatestAllTvl() {
-    const result = await this.dbService.query(
-      `SELECT value, calculated_at FROM tvl ORDER BY calculated_at DESC LIMIT 1`,
+    const tokensResult = await this.dbService.query(
+      `SELECT value, balance, holders, token_id, token_name FROM tokens WHERE value > 0`,
     );
+    
+    const tokens = tokensResult.rows.map(r => (
+      {token: r.token_id,  token_symbol: r.token_name, price: r.value, balance: r.balance, value: parseFloat(r.value) * parseFloat(r.balance), holders: r.holders}
+    )).sort((a,b) => b.value - a.value)
 
-    const result2 = await this.dbService.query(
-      `SELECT value, calculated_at FROM default_tvl ORDER BY calculated_at DESC LIMIT 1`,
-    );
-
-    return result.rows.length > 0 && result2.rows.length > 0 ? 
-      parseFloat(result.rows[0].value) + parseFloat(result2.rows[0].value) : 
-    result.rows.length > 0 ?
-      parseFloat(result.rows[0].value) :
-    result2.rows.length > 0 ?
-      parseFloat(result2.rows[0].value) :
-      null;
+    return {
+      tvl: tokensResult.rows.reduce((a,b) => a + parseFloat(b.value) * parseFloat(b.balance), 0),
+      tokens
+    }
   }
 
   // Calculate TVL for a specific DAO by governance ID

@@ -4,7 +4,10 @@ export declare class TvlController {
     private readonly logger;
     constructor(tvlService: TvlService);
     getLatestAllTvl(): Promise<{
-        totalValueUsd: number;
+        totalValueUsd: {
+            tvl: any;
+            tokens: any;
+        };
         error?: undefined;
     } | {
         error: string;
